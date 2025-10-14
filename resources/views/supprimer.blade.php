@@ -18,7 +18,7 @@
                 <th>ID</th>
                 <th>Nom</th>
                 <th>Prénom</th>
-                <th>Action</th>
+                <th>Action</th> 
             </tr>
         </thead>
         <tbody>

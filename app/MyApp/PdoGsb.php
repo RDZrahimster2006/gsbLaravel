@@ -34,24 +34,43 @@ class PdoGsb{
  * @param $mdp
  * @return l'id, le nom et le prénom sous la forme d'un tableau associatif 
 */
-	
+	public function getInfosVisiteur($login, $mdp)
+{
+    $req = "SELECT id, nom, prenom, login, mdp, adresse, cp, ville, dateEmbauche
+            FROM visiteur
+            WHERE login = :login AND mdp = :mdp";
+
+    $stmt = $this->monPdo->prepare($req);
+    $stmt->execute([
+        ':login' => $login,
+        ':mdp' => $mdp
+    ]);
+
+    return $stmt->fetch(\PDO::FETCH_ASSOC);
+}
+
+
 
 
 
 	public function getInfosGestionnaire($login, $mdp){
-		$req = "select gestionnaire.nom as nom, gestionnaire.login as login, gestionnaire.mdp as mdp from gestionnaire 
-        where gestionnaire.login='" . $login . "' and gestionnaire.mdp='" . $mdp ."'";
-    	$rs = $this->monPdo->query($req);
-		$ligne = $rs->fetch();
-		return $ligne;
-	}
+    $req = "SELECT nom, login, mdp 
+            FROM gestionnaire 
+            WHERE login = :login AND mdp = :mdp";
+    $stmt = $this->monPdo->prepare($req);
+    $stmt->execute(['login' => $login, 'mdp' => $mdp]);
+    return $stmt->fetch(\PDO::FETCH_ASSOC);
+}
+
 	public function getTousLesVisiteurs()
-	{
-		$req = "select visiteur.id as id, visiteur.nom as nom, visiteur.prenom as prenom from visiteur";
-    	$rs = $this->monPdo->query($req);
-		$ligne = $rs->fetchAll();
-		return $ligne;
-	}
+{
+    $req = "SELECT id, nom, prenom FROM visiteur";
+    $stmt = $this->monPdo->prepare($req);
+    $stmt->execute();
+
+    return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+}
+
 
 
 

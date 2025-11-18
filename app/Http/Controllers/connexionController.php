@@ -19,7 +19,7 @@ class connexionController extends Controller
         if (is_array($gestionnaire)) 
             {
                 session(['visiteur' => $gestionnaire]);
-                return view('sommaireg')->with('visiteur', session('visiteur'));
+                return view('somreg')->with('visiteur', session('visiteur'));
             }
             if (!is_array($visiteur)) 
             {

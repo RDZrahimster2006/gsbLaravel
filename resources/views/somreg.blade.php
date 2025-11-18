@@ -1,5 +1,4 @@
 @extends('modeles/visiteur')
-
     @section('menu')
    
         <div id="menuGauche">

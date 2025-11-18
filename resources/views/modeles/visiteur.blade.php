@@ -9,14 +9,14 @@
   </head>
   <body>
     <div id="page">
-      <div id="entete">
-        <img src="{{ asset('images/logo.jpg')}}" id="logoGSB" alt="Laboratoire Galaxy-Swiss Bourdin" title="Laboratoire Galaxy-Swiss Bourdin" />
-        <h1>Suivi du remboursement des frais</h1>
-      </div>
-      @yield('menu') 
-      @yield('contenu1') 
-      @yield('contenu2') 
-     </div>
+        <div id="entete">
+          <img src="{{ asset('images/logo.jpg')}}" id="logoGSB" alt="Laboratoire Galaxy-Swiss Bourdin" title="Laboratoire Galaxy-Swiss Bourdin" />
+          <h1>Suivi du remboursement des frais</h1>
+        </div>
+        @yield('menu') 
+        @yield('contenu1') 
+        @yield('contenu2') 
+    </div>
         
     </body>
   </html>

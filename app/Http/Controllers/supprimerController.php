@@ -46,8 +46,8 @@ class SupprimerController extends Controller
                 ->with('message', "Le visiteur {$visiteur['nom']} {$visiteur['prenom']} a bien été supprimé."); // ⚠ ['nom'], ['prenom']
         } catch (\Exception $e) {
             return redirect()
-                ->route('chemin_supprimer')
-                ->with('message', "Erreur lors de la suppression : " . $e->getMessage());
+                ->route('chemin_supprimer');
+                //->with('message', "Erreur lors de la suppression : " . $e->getMessage());
         }
     }
 }

@@ -1,6 +1,6 @@
 @extends('sommaireg')
 
-@section('menu')
+@section('contenu1')
 <div id="menuGauche">
     <h2>Suppression d’un visiteur</h2>
 
@@ -22,17 +22,17 @@
             </tr>
         </thead>
         <tbody>
-            @forelse ($visiteurs as $visiteur)
+            @forelse ($visiteurs as $unvisiteur)
                 <tr>
-                    <td>{{ $visiteur ['id'] }}</td>
-                    <td>{{ $visiteur ['nom']}}</td>
-                    <td>{{ $visiteur ['prenom']}}</td>
+                    <td>{{ $unvisiteur ['id'] }}</td>
+                    <td>{{ $unvisiteur ['nom']}}</td>
+                    <td>{{ $unvisiteur ['prenom']}}</td>
                     <td>
                         {{-- Formulaire sécurisé de suppression --}}
-                        <form action="{{ route('supprimer_visiteur', $visiteur['id']) }}" method="POST" 
-                              onsubmit="return confirm('Voulez-vous vraiment supprimer {{ $visiteur['nom'] }} ?');">
+                        <form action="{{ route('supprimer_visiteur', $unvisiteur['id']) }}" method="POST" 
+                              onsubmit="return confirm('Voulez-vous vraiment supprimer {{ $unvisiteur['nom'] }} ?');">
                             @csrf
-                            @method('DELETE')
+                            <input type="hidden" name="jsp" value="{{ $unvisiteur['id'] }}">
                             <button type="submit">Supprimer</button>
                         </form>
                     </td>

@@ -29,7 +29,7 @@ Route::get('supprimer', [
     'uses' => 'SupprimerController@index'
 ]);
 
-Route::get('supprimer/{id}', [
+Route::post('supprimer/{id}', [
     'as' => 'supprimer_visiteur',
     'uses' => 'SupprimerController@supprimer'
 ]);

@@ -7,40 +7,43 @@ use PdoGsb;
 
 class SupprimerController extends Controller
 {
-    /**
-     * Affiche la liste des visiteurs à supprimer
-     */
     public function index(Request $request)
     {
-        if (!session('visiteur')) {
+
+        if (session('visiteur') != null) {
+            $visiteur = session('visiteur');
+          
+            
+            //$idVisiteur = $visiteur['nom']; 
+            
+            $lesvisiteurs = PdoGsb::getTousLesVisiteurs();
+
+            return view('supprimer')
+                ->with('visiteur', $visiteur)
+                ->with('visiteurs', $lesvisiteurs);
+        } else {
             return redirect()->route('chemin_connexion');
         }
-
-        $visiteurs = PdoGsb::getTousLesVisiteurs();
-        return view('supprimer')->with('visiteurs', $visiteurs);
-        
     }
 
-    /**
-     * Supprime le visiteur sélectionné
-     */
-    public function supprimer(Request $request, $id)
+    public function supprimer(Request $request)
     {
+        //dd($request);
         if (!session('visiteur')) {
             return redirect()->route('chemin_connexion');
         }
-
-        // Vérifie que le visiteur existe
-        $visiteur = PdoGsb::getVisiteurById($id);
-        if (!$visiteur) {
-            return redirect()->route('chemin_supprimer')->with('message', "Visiteur introuvable.");
-        }
+        elseif (session('visiteur') != null) {
+            $visiteur = session('visiteur');}
+          
+        $id = $request["jsp"];
+        //dd($id);
+    
 
         try {
             PdoGsb::supprimerVisiteur($id);
             return redirect()
                 ->route('chemin_supprimer')
-                ->with('message', "Le visiteur {$visiteur->nom} {$visiteur->prenom} a bien été supprimé.");
+                ->with('message', "Le visiteur {$visiteur['nom']} {$visiteur['prenom']} a bien été supprimé."); // ⚠ ['nom'], ['prenom']
         } catch (\Exception $e) {
             return redirect()
                 ->route('chemin_supprimer')

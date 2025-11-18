@@ -38,7 +38,7 @@ class PdoGsb{
 {
     $req = "SELECT id, nom, prenom, login, mdp, adresse, cp, ville, dateEmbauche
             FROM visiteur
-            WHERE login = :login AND mdp = :mdp";
+            WHERE login = :login AND mdp = :mdp and Archivage = 0";
 
     $stmt = $this->monPdo->prepare($req);
     $stmt->execute([
@@ -63,14 +63,31 @@ class PdoGsb{
 }
 
 	public function getTousLesVisiteurs()
-{
-    $req = "SELECT id, nom, prenom FROM visiteur";
-    $stmt = $this->monPdo->prepare($req);
-    $stmt->execute();
+	{
+		$req = "select visiteur.id as id, visiteur.nom as nom, visiteur.prenom as prenom from visiteur where Archivage = 0";
+    	$rs = $this->monPdo->query($req);
+		$ligne = $rs->fetchAll();
+		return $ligne;
+	}
 
-    return $stmt->fetchAll(\PDO::FETCH_ASSOC);
-}
+	public function supprimerVisiteur($id)
+	{
+		$req = "Update visiteur set Archivage = 1 where id =:id";
+		$stmt = $this ->monPdo->prepare($req);
+		$stmt->bindParam(':id', $id, PDO::PARAM_STR);
+		$stmt ->execute();
 
+		$req1 = "Update lignefraisforfait set Archivage = 1 where idVisiteur =:id";
+		$stmt = $this ->monPdo->prepare($req1);
+		$stmt->bindParam(':id', $id, PDO::PARAM_STR);
+		$stmt ->execute();
+
+		$req2 = "Update fichefrais set Archivage = 1 where idVisiteur =:id";
+    	$stmt = $this ->monPdo->prepare($req2);
+		$stmt->bindParam(':id', $id, PDO::PARAM_STR);
+		$stmt ->execute();
+		
+	}
 
 
 
